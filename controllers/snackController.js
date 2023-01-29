@@ -7,11 +7,6 @@ const {
   deleteSnack,
   updateSnack,
 } = require("../queries/snacks");
-// const {
-//   checkName,
-//   checkArtist,
-//   checkBoolean,
-// } = require("../validations/checkSnacks.js");
 
 //INDEX
 snacks.get("/", async (req, res) => {
@@ -37,7 +32,6 @@ snacks.get("/:id", async (req, res) => {
 
 // CREATE
 snacks.post("/", async (req, res) => {
-  // console.log(req.body)
   try {
     const snack = await createSnack(req.body);
     res.json(snack);
