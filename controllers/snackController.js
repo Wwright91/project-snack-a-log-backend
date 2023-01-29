@@ -32,6 +32,20 @@ snacks.get("/:id", async (req, res) => {
 
 // CREATE
 snacks.post("/", async (req, res) => {
+  // console.log(req.body)
+  if (!req.body.image) {
+    req.body.image = 'https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image'
+  }
+  if (!req.body.fiber) {
+    req.body.fiber = 0
+  }
+  if (!req.body.protein) {
+    req.body.protein = 0
+  }
+  if (!req.body.added_sugar) {
+    req.body.added_sugar = 0
+  }
+  
   try {
     const snack = await createSnack(req.body);
     res.json(snack);
