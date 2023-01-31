@@ -31,7 +31,7 @@ snacks.get("/:id", async (req, res) => {
 });
 
 // CREATE
-snacks.post("/", async (req, res) => {
+snacks.post("/",checkName, async (req, res) => {
   try {
     const snack = await createSnack(req.body);
     res.json(snack);
@@ -52,7 +52,7 @@ snacks.delete("/:id", async (req, res) => {
 });
 
 //UPDATE
-snacks.put("/:id", async (req, res) => {
+snacks.put("/:id",checkName, async (req, res) => {
   const { id } = req.params;
   const updatedSnack = await updateSnack(id, req.body);
   res.status(200).json(updatedSnack);
