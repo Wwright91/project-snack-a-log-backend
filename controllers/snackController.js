@@ -36,18 +36,19 @@ snacks.get("/:id", async (req, res) => {
 snacks.post("/", checkName, async (req, res) => {
   // console.log(req.body)
   if (!req.body.image) {
-    req.body.image = 'https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image'
+    req.body.image =
+      "https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image";
   }
   if (!req.body.fiber) {
-    req.body.fiber = 0
+    req.body.fiber = 0;
   }
   if (!req.body.protein) {
-    req.body.protein = 0
+    req.body.protein = 0;
   }
   if (!req.body.added_sugar) {
-    req.body.added_sugar = 0
+    req.body.added_sugar = 0;
   }
-  
+
   try {
     const snack = await createSnack(req.body);
     res.json(snack);
@@ -71,6 +72,21 @@ snacks.delete("/:id", async (req, res) => {
 //UPDATE
 snacks.put("/:id", checkName, async (req, res) => {
   const { id } = req.params;
+
+  if (!req.body.image) {
+    req.body.image =
+      "https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image";
+  }
+  if (!req.body.fiber) {
+    req.body.fiber = 0;
+  }
+  if (!req.body.protein) {
+    req.body.protein = 0;
+  }
+  if (!req.body.added_sugar) {
+    req.body.added_sugar = 0;
+  }
+
   const updatedSnack = await updateSnack(id, req.body);
   res.status(200).json(updatedSnack);
 });
