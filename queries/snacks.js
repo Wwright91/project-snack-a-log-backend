@@ -24,11 +24,15 @@ const getSnack = async (id) => {
 const createSnack = async (snack) => {
   const { name, fiber, protein, added_sugar, image } = snack;
   const is_healthy = confirmHealth(snack);
+
   try {
     const newSnack = await db.oneOrNone(
-      "INSERT INTO snacks (name, fiber, protein, added_sugar, is_healthy, image) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+      "INSERT INTO snacks (name, fiber, protein, added_sugar, is_healthy, image) VALUES(INITCAP($1), $2, $3, $4, $5, $6) RETURNING *",
       [name, fiber, protein, added_sugar, is_healthy, image]
     );
+    //     SELECT
+    //    (name) AS new_name
+    // FROM snacks;
     return newSnack;
   } catch (error) {
     console.log(error);
@@ -54,7 +58,7 @@ const updateSnack = async (id, snack) => {
   const { name, fiber, protein, added_sugar, is_healthy, image } = snack;
   try {
     const updatedSnack = await db.one(
-      "UPDATE snacks SET name=$1, fiber=$2, protein=$3, added_sugar=$4, is_healthy=$5, image=$6 WHERE id=$7 RETURNING *",
+      "UPDATE snacks SET name=INITCAP($1), fiber=$2, protein=$3, added_sugar=$4, is_healthy=$5, image=$6 WHERE id=$7 RETURNING *",
       [name, fiber, protein, added_sugar, is_healthy, image, id]
     );
     return updatedSnack;
