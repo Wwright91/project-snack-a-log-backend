@@ -8,13 +8,15 @@ const {
   updateSnack,
 } = require("../queries/snacks");
 
+const { checkName } = require("../Validation/check.js");
+
 //INDEX
 snacks.get("/", async (req, res) => {
   const allSnacks = await getAllSnacks();
-    console.log(allSnacks);
-    if (allSnacks[0]) {
-         res.status(200).json(allSnacks);
-    } else {
+  console.log(allSnacks);
+  if (allSnacks[0]) {
+    res.status(200).json(allSnacks);
+  } else {
     res.status(500).json({ error: "server error" });
   }
 });
@@ -31,7 +33,7 @@ snacks.get("/:id", async (req, res) => {
 });
 
 // CREATE
-snacks.post("/", async (req, res) => {
+snacks.post("/", checkName, async (req, res) => {
   // console.log(req.body)
   if (!req.body.image) {
     req.body.image = 'https://dummyimage.com/400x400/6e6c6e/e9e9f5.png&text=No+Image'
@@ -50,6 +52,7 @@ snacks.post("/", async (req, res) => {
     const snack = await createSnack(req.body);
     res.json(snack);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error });
   }
 });
@@ -66,7 +69,7 @@ snacks.delete("/:id", async (req, res) => {
 });
 
 //UPDATE
-snacks.put("/:id", async (req, res) => {
+snacks.put("/:id", checkName, async (req, res) => {
   const { id } = req.params;
   const updatedSnack = await updateSnack(id, req.body);
   res.status(200).json(updatedSnack);

@@ -23,7 +23,7 @@ const getSnack = async (id) => {
 // CREATE
 const createSnack = async (snack) => {
   const { name, fiber, protein, added_sugar, image } = snack;
-  const is_healthy = confirmHealth()
+  const is_healthy = confirmHealth(snack);
   try {
     const newSnack = await db.oneOrNone(
       "INSERT INTO snacks (name, fiber, protein, added_sugar, is_healthy, image) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
@@ -31,6 +31,7 @@ const createSnack = async (snack) => {
     );
     return newSnack;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 };
